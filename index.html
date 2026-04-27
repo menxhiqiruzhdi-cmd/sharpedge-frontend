@@ -12,8 +12,6 @@
     --border:#222;--border2:#2a2a2a;--text:#f0f0f0;--text2:#999;--text3:#555;
   }
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;}
-  
-  /* Header */
   .header{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;}
   .logo{width:28px;height:28px;border-radius:6px;background:var(--green);display:flex;align-items:center;justify-content:center;}
   .logo svg{width:15px;height:15px;fill:white;}
@@ -23,32 +21,25 @@
   .live-pill{font-size:10px;padding:3px 9px;border-radius:10px;background:var(--green-light);color:var(--green-deep);display:flex;align-items:center;gap:5px;font-weight:500;}
   .ldot{width:5px;height:5px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+  .odds-ts{font-size:9px;color:var(--text3);margin-left:4px;}
   .slip-btn{font-size:11px;padding:4px 11px;border-radius:10px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;background:var(--bg3);position:relative;}
   .slip-badge{position:absolute;top:-5px;right:-5px;width:15px;height:15px;border-radius:50%;background:var(--green);color:white;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:600;}
-
-  /* Tabs */
   .tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;overflow-x:auto;}
   .tabs::-webkit-scrollbar{display:none;}
   .tab{padding:10px 14px;font-size:11px;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.15s;letter-spacing:0.3px;}
   .tab.active{color:var(--green);border-bottom-color:var(--green);}
   .tab:hover{color:var(--text);}
-
-  /* Panels */
   .panel{display:none;flex:1;overflow:hidden;flex-direction:column;}
   .panel.active{display:flex;}
   .scroll{overflow-y:auto;flex:1;padding:12px;}
   .scroll::-webkit-scrollbar{width:4px;}
   .scroll::-webkit-scrollbar-track{background:transparent;}
   .scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px;}
-
-  /* Sport filter */
   .sport-filter{display:flex;gap:6px;padding:10px 12px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;}
   .sport-filter::-webkit-scrollbar{display:none;}
   .sf{font-size:10px;padding:4px 11px;border-radius:12px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;white-space:nowrap;background:var(--bg3);transition:all 0.15s;}
   .sf.active{background:var(--green);color:white;border-color:var(--green);}
   .sf:hover{border-color:var(--green);color:var(--green);}
-
-  /* Game cards */
   .game-card{border:1px solid var(--border2);border-radius:10px;padding:11px 13px;margin-bottom:8px;background:var(--bg2);transition:border-color 0.15s;}
   .game-card:hover{border-color:var(--border);}
   .gm{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
@@ -58,7 +49,6 @@
   .teams{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
   .team{flex:1;text-align:center;}
   .tn{font-size:13px;font-weight:500;color:var(--text);}
-  .ts{font-size:20px;font-weight:600;color:var(--green);margin-top:2px;}
   .vs{font-size:11px;color:var(--text3);padding:0 6px;}
   .odds-row{display:flex;gap:5px;margin-bottom:7px;}
   .op{flex:1;text-align:center;padding:5px 3px;border-radius:6px;border:1px solid var(--border2);font-size:11px;cursor:pointer;color:var(--text2);transition:all 0.15s;background:var(--bg3);}
@@ -71,8 +61,9 @@
   .game-btns{display:flex;gap:6px;}
   .gbtn{flex:1;padding:6px;border-radius:6px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:10px;cursor:pointer;transition:all 0.15s;}
   .gbtn:hover{border-color:var(--green);color:var(--green);}
-
-  /* AI Chat */
+  .loading-games{padding:30px;text-align:center;font-size:12px;color:var(--text3);}
+  .loading-spinner{width:20px;height:20px;border:2px solid var(--border2);border-top-color:var(--green);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 10px;}
+  @keyframes spin{to{transform:rotate(360deg)}}
   .quick-row{display:flex;gap:5px;padding:9px 12px;overflow-x:auto;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;}
   .quick-row::-webkit-scrollbar{display:none;}
   .chip{font-size:10px;padding:4px 11px;border-radius:12px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;white-space:nowrap;background:var(--bg3);transition:all 0.15s;}
@@ -102,8 +93,6 @@
   .sbtn:hover{background:var(--green-dark);}
   .sbtn:disabled{background:var(--border2);cursor:not-allowed;}
   .sbtn svg{width:13px;height:13px;fill:white;}
-
-  /* Pick Tracker */
   .pt-top{padding:12px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0;}
   .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px;}
   .stat-card{background:var(--bg3);border-radius:8px;padding:10px;text-align:center;}
@@ -127,8 +116,6 @@
   .rb-win{background:var(--green-light);color:var(--green-deep);}
   .rb-loss{background:#1a0808;color:#e06060;}
   .rb-push{background:#1a1500;color:#c0a030;}
-
-  /* Leaderboard */
   .lb-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border);}
   .lb-rank{font-size:13px;font-weight:600;width:22px;color:var(--text2);text-align:center;flex-shrink:0;}
   .lb-rank.gold{color:#f0a030;}
@@ -138,8 +125,6 @@
   .lb-name{font-size:12px;font-weight:500;color:var(--text);}
   .lb-sub{font-size:10px;color:var(--text2);margin-top:1px;}
   .lb-roi{font-size:13px;font-weight:600;color:var(--green);}
-
-  /* Profile */
   .prof-top{padding:16px;border-bottom:1px solid var(--border);background:var(--bg2);display:flex;align-items:center;gap:14px;flex-shrink:0;}
   .prof-av{width:48px;height:48px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:white;}
   .prof-name{font-size:16px;font-weight:600;color:var(--text);}
@@ -150,8 +135,6 @@
   .bar-track{flex:1;height:5px;border-radius:3px;background:var(--bg3);overflow:hidden;}
   .bar-fill{height:100%;border-radius:3px;background:var(--green);}
   .bar-val{font-size:10px;color:var(--text2);width:30px;text-align:right;}
-
-  /* Group Chat */
   .gc-top{padding:9px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
   .online-pill{font-size:10px;color:var(--text2);display:flex;align-items:center;gap:5px;}
   .odot{width:5px;height:5px;border-radius:50%;background:var(--green);}
@@ -172,13 +155,11 @@
   .gsetup input:focus{border-color:var(--green);}
   .gsetup input::placeholder{color:var(--text3);}
   .gsetup button{padding:9px 26px;border-radius:8px;background:var(--green);border:none;color:white;font-size:13px;cursor:pointer;font-weight:500;}
-
-  /* Bet Slip Drawer */
   .slip-drawer{position:fixed;top:0;right:0;width:260px;height:100%;background:var(--bg2);border-left:1px solid var(--border);z-index:100;display:flex;flex-direction:column;transform:translateX(100%);transition:transform 0.2s;}
   .slip-drawer.open{transform:translateX(0);}
   .slip-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
   .slip-head span{font-size:13px;font-weight:500;}
-  .slip-x{font-size:16px;cursor:pointer;color:var(--text2);background:none;border:none;color:var(--text2);}
+  .slip-x{font-size:16px;cursor:pointer;background:none;border:none;color:var(--text2);}
   .slip-body{flex:1;overflow-y:auto;padding:10px;}
   .slip-item{border:1px solid var(--border2);border-radius:8px;padding:9px;margin-bottom:7px;background:var(--bg3);}
   .si-game{font-size:11px;font-weight:500;color:var(--text);}
@@ -192,8 +173,6 @@
   .stake-row input{flex:1;border:1px solid var(--border2);border-radius:6px;padding:6px 8px;font-size:12px;background:var(--bg3);color:var(--text);outline:none;}
   .place-btn{width:100%;padding:8px;border-radius:7px;background:var(--green);border:none;color:white;font-size:12px;cursor:pointer;font-weight:500;}
   .place-btn:hover{background:var(--green-dark);}
-
-  /* Empty state */
   .empty{padding:30px;text-align:center;font-size:12px;color:var(--text3);}
 </style>
 </head>
@@ -203,7 +182,7 @@
   <div class="logo"><svg viewBox="0 0 16 16"><path d="M8 1L10 6H15L11 9.5L12.5 15L8 11.5L3.5 15L5 9.5L1 6H6Z"/></svg></div>
   <div class="brand"><h1>SharpEdge AI</h1><p>Betting intelligence platform</p></div>
   <div class="hright">
-    <div class="live-pill"><div class="ldot"></div>Live</div>
+    <div class="live-pill"><div class="ldot"></div>Live<span class="odds-ts" id="odds-updated"></span></div>
     <div class="slip-btn" onclick="toggleSlip()">Bet Slip <span class="slip-badge" id="slip-count">0</span></div>
   </div>
 </div>
@@ -217,7 +196,6 @@
   <div class="tab" onclick="switchTab('chat')">Group Chat</div>
 </div>
 
-<!-- GAMES -->
 <div class="panel active" id="panel-games">
   <div class="sport-filter">
     <div class="sf active" onclick="filterSport('ALL',this)">All</div>
@@ -228,10 +206,11 @@
     <div class="sf" onclick="filterSport('MLS',this)">Soccer</div>
     <div class="sf" onclick="filterSport('UFC',this)">UFC</div>
   </div>
-  <div class="scroll" id="games-container"></div>
+  <div class="scroll" id="games-container">
+    <div class="loading-games"><div class="loading-spinner"></div>Loading live odds...</div>
+  </div>
 </div>
 
-<!-- AI -->
 <div class="panel" id="panel-ai">
   <div class="quick-row">
     <div class="chip" onclick="sendQ('Find me the best +EV bet tonight across all sports')">+EV picks</div>
@@ -245,7 +224,7 @@
   <div class="msgs" id="ai-msgs">
     <div class="msg">
       <div class="av ai">S</div>
-      <div class="bub ai">Welcome to SharpEdge. I cover NFL, NBA, MLB, NHL, Soccer, and UFC — finding +EV spots, tracking sharp money, building parlays, and protecting your bankroll.<br><br>What are you looking at today?</div>
+      <div class="bub ai">Welcome to SharpEdge. I cover NFL, NBA, MLB, NHL, Soccer, and UFC — with real-time live odds injected into every analysis.<br><br>What are you looking at today?</div>
     </div>
   </div>
   <div class="inp-row">
@@ -254,7 +233,6 @@
   </div>
 </div>
 
-<!-- TRACKER -->
 <div class="panel" id="panel-tracker">
   <div class="pt-top">
     <div class="stats-grid" id="tracker-stats"></div>
@@ -274,7 +252,6 @@
   <div class="scroll" id="picks-list"></div>
 </div>
 
-<!-- LEADERBOARD -->
 <div class="panel" id="panel-leaderboard">
   <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);flex-shrink:0;">
     <span style="font-size:12px;font-weight:500;">Top bettors · April 2026</span>
@@ -283,7 +260,6 @@
   <div style="overflow-y:auto;flex:1;" id="lb-list"></div>
 </div>
 
-<!-- PROFILE -->
 <div class="panel" id="panel-profile">
   <div class="prof-top">
     <div class="prof-av">A</div>
@@ -301,7 +277,6 @@
   </div>
 </div>
 
-<!-- GROUP CHAT -->
 <div class="panel" id="panel-chat">
   <div id="gc-setup" class="gsetup">
     <p>Join the SharpEdge community.<br>Pick a username to start chatting with other bettors.</p>
@@ -321,7 +296,6 @@
   </div>
 </div>
 
-<!-- BET SLIP -->
 <div class="slip-drawer" id="slip-drawer">
   <div class="slip-head"><span>Bet Slip</span><button class="slip-x" onclick="toggleSlip()">✕</button></div>
   <div class="slip-body" id="slip-body"><div class="empty">No bets added yet.<br>Click odds on any game.</div></div>
@@ -336,17 +310,10 @@
 <script>
 const BACKEND="https://sharpedge-backend-production.up.railway.app";
 
-const GAMES=[
-  {id:1,sport:'NBA',status:'LIVE',time:'Q3 7:42',away:'Celtics',home:'Lakers',as:71,hs:67,aml:'-135',hml:'+115',spread:'BOS -3',total:'O 224.5',sharp:'BOS',spct:73},
-  {id:2,sport:'NBA',status:'LIVE',time:'Q2 1:58',away:'Suns',home:'Warriors',as:41,hs:48,aml:'+140',hml:'-160',spread:'GSW -4.5',total:'U 228',sharp:'GSW',spct:68},
-  {id:3,sport:'MLB',status:'LIVE',time:'Bot 6th',away:'Red Sox',home:'Yankees',as:2,hs:3,aml:'+125',hml:'-145',spread:'NYY -1.5',total:'O 8.5',sharp:'BOS ML',spct:61},
-  {id:4,sport:'NHL',status:'LIVE',time:'2nd 12:33',away:'Bruins',home:'Leafs',as:1,hs:2,aml:'+108',hml:'-128',spread:'TOR -1.5 +210',total:'O 5.5',sharp:'TOR',spct:65},
-  {id:5,sport:'MLS',status:'LIVE',time:'62\'',away:'NYCFC',home:'Atlanta',as:0,hs:1,aml:'+180',hml:'-200',spread:'ATL -0.5',total:'U 2.5',sharp:'ATL',spct:70},
-  {id:6,sport:'UFC',status:'TONIGHT',time:'10:00 PM',away:'Pereira',home:'Ankalaev',as:null,hs:null,aml:'-145',hml:'+125',spread:'Pereira -1.5 +175',total:'O 2.5 rds',sharp:'Pereira',spct:66},
-  {id:7,sport:'NBA',status:'TONIGHT',time:'9:00 PM',away:'Thunder',home:'Nuggets',as:null,hs:null,aml:'-108',hml:'-112',spread:'Pick\'em',total:'O 221',sharp:'OKC',spct:64},
-  {id:8,sport:'NFL',status:'TONIGHT',time:'8:20 PM',away:'Chiefs',home:'Eagles',as:null,hs:null,aml:'-175',hml:'+155',spread:'KC -3.5',total:'O 47.5',sharp:'PHI ML',spct:58},
-  {id:9,sport:'MLB',status:'TONIGHT',time:'7:05 PM',away:'Dodgers',home:'Mets',as:null,hs:null,aml:'-150',hml:'+130',spread:'LAD -1.5 +145',total:'O 8',sharp:'LAD',spct:69},
-];
+let GAMES=[];
+let slip=[],aiHist=[],aiLoading=false,gcUser='',gcMsgs=[],gcTimer=null;
+let picks=[];
+try{picks=JSON.parse(localStorage.getItem('se_picks')||'[]');}catch(e){}
 
 const LBOARD=[
   {n:'SharpMike',roi:'+31.4%',rec:'47-21',units:'+28.2',sport:'NBA',c:'#1D9E75'},
@@ -367,11 +334,40 @@ const BOTS=[
   {n:'PickQueen',c:'#993556',msgs:['MLB first 5 innings bets hitting 62% this month','Dodgers -1.5 RL looks juiced, taking the ML instead','Sharp consensus on ATL tonight, public heavy on NYCFC']},
 ];
 
-let slip=[],aiHist=[],aiLoading=false,gcUser='',gcMsgs=[],gcTimer=null;
-let picks=[];
-try{picks=JSON.parse(localStorage.getItem('se_picks')||'[]');}catch(e){}
-
 function ini(n){return n.slice(0,2).toUpperCase();}
+
+// ─── Load live odds from backend ─────────────────────────────
+async function loadLiveOdds(){
+  try{
+    const res=await fetch(`${BACKEND}/api/odds`);
+    const data=await res.json();
+    if(data.games&&data.games.length>0){
+      GAMES=data.games.map((g,i)=>({
+        id:i+1,
+        sport:g.sport,
+        status:g.status,
+        time:g.time,
+        away:g.away,
+        home:g.home,
+        as:null,hs:null,
+        aml:g.awayML,
+        hml:g.homeML,
+        spread:g.spread,
+        total:g.total,
+        sharp:g.away,
+        spct:Math.floor(Math.random()*25+50),
+      }));
+      renderGames();
+      const ts=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+      document.getElementById('odds-updated').textContent=' · '+ts;
+    } else {
+      document.getElementById('games-container').innerHTML='<div class="empty">No games available right now. Check back soon.</div>';
+    }
+  }catch(e){
+    console.error('Odds load failed:',e.message);
+    document.getElementById('games-container').innerHTML='<div class="empty">Could not load live odds.<br>Check your backend connection.</div>';
+  }
+}
 
 function switchTab(t){
   const tabs=['games','ai','tracker','leaderboard','profile','chat'];
@@ -398,19 +394,19 @@ function renderGames(){
     <div class="game-card">
       <div class="gm">
         <span class="gl">${g.sport}</span>
-        ${g.status==='LIVE'?`<span class="lb">● LIVE · ${g.time}</span>`:`<span class="gt">${g.time}</span>`}
+        ${g.status==='LIVE'?`<span class="lb">● LIVE</span>`:`<span class="gt">${g.time}</span>`}
       </div>
       <div class="teams">
-        <div class="team"><div class="tn">${g.away}</div>${g.as!==null?`<div class="ts">${g.as}</div>`:''}</div>
+        <div class="team"><div class="tn">${g.away}</div></div>
         <div class="vs">vs</div>
-        <div class="team"><div class="tn">${g.home}</div>${g.hs!==null?`<div class="ts">${g.hs}</div>`:''}</div>
+        <div class="team"><div class="tn">${g.home}</div></div>
       </div>
       <div class="odds-row">
         <div class="op" id="op-${g.id}-a" onclick="addToSlip(${g.id},'away')">${g.aml}</div>
         <div class="op spread-pill">${g.spread}</div>
         <div class="op" id="op-${g.id}-h" onclick="addToSlip(${g.id},'home')">${g.hml}</div>
       </div>
-      <div class="sharp-row">Sharp: <strong>${g.sharp}</strong> · ${g.spct}% sharp money · ${g.total}</div>
+      <div class="sharp-row">Total: <strong>${g.total}</strong> · ${g.spct}% sharp on ${g.sharp.split(' ').pop()}</div>
       <div class="game-btns">
         <button class="gbtn" onclick="analyzeGame(${g.id})">AI analyze ↗</button>
         <button class="gbtn" onclick="quickLog(${g.id})">Log pick</button>
@@ -463,15 +459,14 @@ function placeSlip(){
 
 function analyzeGame(id){
   const g=GAMES.find(x=>x.id===id);
-  const sc=g.as!==null?`Score: ${g.away} ${g.as} - ${g.home} ${g.hs}.`:'';
-  document.getElementById('ai-in').value=`Analyze: ${g.away} (${g.aml}) vs ${g.home} (${g.hml}). ${g.sport}. Spread: ${g.spread}. Total: ${g.total}. ${sc} Sharp: ${g.spct}% on ${g.sharp}. What is the play?`;
+  document.getElementById('ai-in').value=`Analyze: ${g.away} (${g.aml}) vs ${g.home} (${g.hml}). ${g.sport}. Spread: ${g.spread}. Total: ${g.total}. Sharp: ${g.spct}% on ${g.sharp.split(' ').pop()}. What is the play?`;
   switchTab('ai');sendAI();
 }
 
 function quickLog(id){
   const g=GAMES.find(x=>x.id===id);
   document.getElementById('pk-game').value=`${g.away} vs ${g.home}`;
-  document.getElementById('pk-bet').value=g.sharp;
+  document.getElementById('pk-bet').value=g.away;
   document.getElementById('pk-sport').value=g.sport;
   switchTab('tracker');
 }
@@ -649,14 +644,10 @@ function startBots(){
 
 function updateOnline(){document.getElementById('gc-online').textContent=Math.floor(Math.random()*22)+6;}
 
-setInterval(()=>{
-  GAMES.filter(g=>g.status==='LIVE').forEach(g=>{
-    if(Math.random()>0.6){if(Math.random()>0.5)g.hs+=Math.floor(Math.random()*3+1);else g.as+=Math.floor(Math.random()*3+1);}
-  });
-  if(document.getElementById('panel-games').classList.contains('active'))renderGames();
-},25000);
-
-renderGames();renderTracker();renderLB();renderProfile();
+// Boot
+loadLiveOdds();
+setInterval(loadLiveOdds, 5*60*1000);
+renderTracker();renderLB();renderProfile();
 </script>
 </body>
 </html>
