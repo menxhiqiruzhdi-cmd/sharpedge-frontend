@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SharpEdge AI — Bet Smarter. Win More.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--g:#00E5A0;--g2:#00B87A;--g3:#007A52;--glow:0 0 30px rgba(0,229,160,0.3);--bg:#060608;--bg2:#0C0D10;--bg3:#12141A;--bg4:#181B22;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.12);--text:#F2F4F8;--text2:#8B91A0;--text3:#454B5A;--gold:#F5A623;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 40px;height:60px;display:flex;align-items:center;gap:16px;background:rgba(6,6,8,0.9);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-icon{width:30px;height:30px;border-radius:8px;background:var(--g);display:flex;align-items:center;justify-content:center;box-shadow:var(--glow);}
+.nav-icon svg{width:14px;height:14px;fill:#000;}
+.nav-brand{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);}
+.nav-links{display:flex;gap:28px;margin-left:40px;}
+.nav-link{font-size:13px;color:var(--text2);text-decoration:none;transition:color 0.2s;}
+.nav-link:hover{color:var(--text);}
+.nav-right{margin-left:auto;display:flex;gap:10px;align-items:center;}
+.btn-ghost{font-size:13px;padding:7px 18px;border-radius:8px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;background:transparent;text-decoration:none;transition:all 0.2s;}
+.btn-ghost:hover{border-color:rgba(0,229,160,0.3);color:var(--g);}
+.btn-primary{font-size:13px;font-family:'Syne',sans-serif;font-weight:700;padding:8px 20px;border-radius:8px;border:none;background:var(--g);color:#000;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+.btn-primary:hover{background:#00ffb2;box-shadow:var(--glow);}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px 60px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;pointer-events:none;}
+.hero-bg::before{content:'';position:absolute;top:10%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,229,160,0.07),transparent 65%);}
+.hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to bottom,transparent,var(--bg));}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent);}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-family:'DM Mono',monospace;color:var(--g);padding:5px 14px;border-radius:20px;border:1px solid rgba(0,229,160,0.25);background:rgba(0,229,160,0.06);margin-bottom:28px;animation:up 0.6s ease;}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(42px,7vw,84px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;animation:up 0.7s ease 0.1s both;}
+h1 .acc{color:var(--g);}
+.hero-sub{font-size:clamp(15px,2vw,19px);color:var(--text2);max-width:540px;line-height:1.7;margin-bottom:40px;animation:up 0.7s ease 0.2s both;}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:up 0.7s ease 0.3s both;}
+.btn-hero{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;padding:14px 32px;border-radius:12px;border:none;background:var(--g);color:#000;cursor:pointer;text-decoration:none;transition:all 0.25s;display:inline-block;}
+.btn-hero:hover{background:#00ffb2;box-shadow:0 0 40px rgba(0,229,160,0.4);transform:translateY(-1px);}
+.btn-hero-o{font-family:'Syne',sans-serif;font-weight:600;font-size:15px;padding:14px 32px;border-radius:12px;border:1px solid var(--border2);color:var(--text);cursor:pointer;background:transparent;text-decoration:none;transition:all 0.2s;display:inline-block;}
+.btn-hero-o:hover{border-color:rgba(0,229,160,0.3);color:var(--g);}
+.hero-stats{display:flex;gap:48px;justify-content:center;margin-top:64px;animation:up 0.7s ease 0.4s both;flex-wrap:wrap;}
+.hs-val{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--text);}
+.hs-val span{color:var(--g);}
+.hs-lbl{font-size:11px;font-family:'DM Mono',monospace;color:var(--text3);margin-top:4px;letter-spacing:0.5px;}
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+section{padding:80px 20px;}
+.inner{max-width:1000px;margin:0 auto;}
+.inner-sm{max-width:860px;margin:0 auto;}
+.stag{font-size:10px;font-family:'DM Mono',monospace;color:var(--g);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;display:block;}
+.stitle{font-family:'Syne',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;margin-bottom:14px;line-height:1.1;}
+.ssub{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:40px;}
+.alt-bg{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.center{text-align:center;}
+/* Demo */
+.demo-win{border:1px solid var(--border2);border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 40px 80px rgba(0,0,0,0.5);}
+.demo-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);}
+.dd{width:10px;height:10px;border-radius:50%;}
+.demo-url{flex:1;background:var(--bg4);border-radius:6px;padding:5px 12px;font-size:11px;font-family:'DM Mono',monospace;color:var(--text3);margin:0 12px;}
+.demo-chips{display:flex;gap:7px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--bg2);}
+.dchip{font-size:11px;font-family:'DM Mono',monospace;padding:5px 12px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;background:var(--bg3);transition:all 0.15s;}
+.dchip:hover{border-color:rgba(0,229,160,0.4);color:var(--g);}
+.demo-msgs{padding:20px;display:flex;flex-direction:column;gap:14px;min-height:280px;max-height:340px;overflow-y:auto;}
+.dmsg{display:flex;gap:10px;align-items:flex-start;animation:up 0.3s ease;}
+.dmsg.u{flex-direction:row-reverse;}
+.dav{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;font-family:'Syne',sans-serif;flex-shrink:0;}
+.dav.ai{background:var(--g);color:#000;}
+.dav.u{background:var(--bg4);color:var(--text2);border:1px solid var(--border2);}
+.dbub{max-width:80%;padding:11px 14px;border-radius:12px;font-size:13px;line-height:1.65;}
+.dbub.ai{background:var(--bg2);border:1px solid var(--border);border-radius:2px 12px 12px 12px;color:var(--text);}
+.dbub.u{background:linear-gradient(135deg,var(--g3),var(--g2));color:white;border-radius:12px 2px 12px 12px;}
+.tbub{background:var(--bg2);border:1px solid var(--border);border-radius:2px 12px 12px 12px;padding:12px 16px;display:flex;gap:5px;align-items:center;}
+.tbub span{width:5px;height:5px;border-radius:50%;background:var(--text3);animation:bns 1.4s infinite;}
+.tbub span:nth-child(2){animation-delay:0.2s;}
+.tbub span:nth-child(3){animation-delay:0.4s;}
+@keyframes bns{0%,60%,100%{transform:translateY(0);opacity:0.5}30%{transform:translateY(-6px);opacity:1}}
+.demo-inp{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--bg2);}
+.demo-inp input{flex:1;border:1px solid var(--border2);border-radius:8px;padding:9px 14px;font-size:13px;font-family:'DM Sans',sans-serif;background:var(--bg3);color:var(--text);outline:none;}
+.demo-inp input:focus{border-color:rgba(0,229,160,0.4);}
+.demo-inp input::placeholder{color:var(--text3);}
+.dsend{width:36px;height:36px;border-radius:8px;background:var(--g);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.dsend:hover{background:#00ffb2;}
+.dsend:disabled{background:var(--bg4);cursor:not-allowed;}
+.dsend svg{width:13px;height:13px;fill:#000;}
+/* Features */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;}
+.feat-card{border:1px solid var(--border);border-radius:14px;padding:26px;background:var(--bg2);transition:all 0.2s;position:relative;overflow:hidden;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,160,0.2),transparent);opacity:0;transition:opacity 0.2s;}
+.feat-card:hover{border-color:rgba(0,229,160,0.2);transform:translateY(-2px);}
+.feat-card:hover::before{opacity:1;}
+.feat-icon{font-size:22px;margin-bottom:16px;}
+.feat-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:9px;}
+.feat-desc{font-size:13px;color:var(--text2);line-height:1.7;}
+.feat-tag{display:inline-block;margin-top:12px;font-size:9px;font-family:'DM Mono',monospace;color:var(--g);padding:3px 8px;border-radius:5px;background:rgba(0,229,160,0.08);letter-spacing:0.5px;}
+/* Sports */
+.sports-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:36px;}
+.sp{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:12px;border:1px solid var(--border);background:var(--bg3);font-size:13px;color:var(--text2);transition:all 0.2s;}
+.sp:hover{border-color:rgba(0,229,160,0.3);color:var(--text);}
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:16px;align-items:start;}
+.pc{border:1px solid var(--border);border-radius:16px;padding:30px;background:var(--bg2);position:relative;transition:all 0.2s;}
+.pc.pop{border-color:rgba(0,229,160,0.4);background:var(--bg3);}
+.pc.pop::before{content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-size:10px;font-family:'DM Mono',monospace;color:#000;background:var(--g);padding:4px 14px;border-radius:10px;letter-spacing:1px;}
+.pc-name{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text2);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;}
+.pc-amt{display:flex;align-items:baseline;gap:3px;margin-bottom:8px;}
+.pc-dollar{font-family:'Syne',sans-serif;font-size:18px;font-weight:600;color:var(--text2);}
+.pc-num{font-family:'Syne',sans-serif;font-size:50px;font-weight:800;color:var(--text);line-height:1;}
+.pc-per{font-size:13px;color:var(--text3);font-family:'DM Mono',monospace;}
+.pc-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.pc-feats{display:flex;flex-direction:column;gap:9px;margin-bottom:24px;}
+.pf{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text2);}
+.pf.dim{color:var(--text3);}
+.pfc{width:17px;height:17px;border-radius:5px;background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pfc svg{width:9px;height:9px;stroke:var(--g);fill:none;stroke-width:2.5;}
+.pfx{width:17px;height:17px;border-radius:5px;background:rgba(255,255,255,0.03);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;color:var(--text3);}
+.pc-btn{width:100%;padding:12px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:all 0.2s;letter-spacing:0.3px;border:none;text-align:center;display:block;text-decoration:none;}
+.pc-btn.out{background:transparent;border:1px solid var(--border2);color:var(--text2);}
+.pc-btn.out:hover{border-color:rgba(0,229,160,0.3);color:var(--g);}
+.pc-btn.fil{background:var(--g);color:#000;}
+.pc-btn.fil:hover{background:#00ffb2;box-shadow:var(--glow);}
+/* Testimonials */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:14px;}
+.tc{border:1px solid var(--border);border-radius:14px;padding:22px;background:var(--bg3);}
+.tc-stars{color:var(--gold);font-size:13px;margin-bottom:11px;letter-spacing:2px;}
+.tc-text{font-size:13px;color:var(--text2);line-height:1.75;margin-bottom:16px;font-style:italic;}
+.tc-author{display:flex;align-items:center;gap:10px;}
+.tc-av{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Syne',sans-serif;color:#000;}
+.tc-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:600;}
+.tc-handle{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);}
+.tc-roi{font-size:11px;font-family:'DM Mono',monospace;color:var(--g);margin-top:3px;}
+/* How */
+.how-steps{display:flex;flex-direction:column;}
+.how-step{display:flex;gap:22px;padding:26px 0;border-bottom:1px solid var(--border);}
+.how-step:last-child{border-bottom:none;}
+.step-n{width:38px;height:38px;border-radius:10px;background:rgba(0,229,160,0.08);border:1px solid rgba(0,229,160,0.2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:16px;font-weight:800;color:var(--g);flex-shrink:0;}
+.step-t{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:7px;}
+.step-d{font-size:14px;color:var(--text2);line-height:1.7;}
+/* CTA */
+.cta-section{padding:120px 20px;text-align:center;position:relative;overflow:hidden;}
+.cta-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(0,229,160,0.07),transparent 70%);pointer-events:none;}
+.cta-inner{max-width:560px;margin:0 auto;position:relative;}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(32px,5vw,56px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:18px;}
+.cta-sub{font-size:17px;color:var(--text2);line-height:1.7;margin-bottom:38px;}
+/* Footer */
+footer{padding:36px 40px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+.footer-links{display:flex;gap:20px;}
+.fl{font-size:12px;color:var(--text3);text-decoration:none;font-family:'DM Mono',monospace;transition:color 0.2s;}
+.fl:hover{color:var(--text2);}
+.disclaimer{padding:18px 40px;background:var(--bg2);border-top:1px solid var(--border);font-size:11px;color:var(--text3);font-family:'DM Mono',monospace;text-align:center;line-height:1.8;}
+/* Modal */
+.modal-ov{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+.modal-ov.open{display:flex;}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:36px;width:100%;max-width:410px;position:relative;animation:up 0.3s ease;}
+.modal-x{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;}
+.modal-x:hover{color:var(--text);}
+.modal-logo{width:40px;height:40px;border-radius:10px;background:var(--g);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.modal-logo svg{width:18px;height:18px;fill:#000;}
+.modal-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;text-align:center;margin-bottom:6px;}
+.modal-sub{font-size:13px;color:var(--text2);text-align:center;margin-bottom:26px;}
+.modal-tabs{display:flex;border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:22px;}
+.mtab{flex:1;padding:8px;border-radius:8px;font-size:13px;font-family:'Syne',sans-serif;font-weight:600;cursor:pointer;text-align:center;transition:all 0.2s;border:none;background:transparent;color:var(--text3);}
+.mtab.active{background:var(--bg4);color:var(--text);}
+.ilabel{font-size:11px;font-family:'DM Mono',monospace;color:var(--text3);margin-bottom:5px;letter-spacing:0.5px;display:block;}
+.igroup{margin-bottom:13px;}
+.minput{width:100%;border:1px solid var(--border2);border-radius:10px;padding:11px 14px;font-size:14px;font-family:'DM Sans',sans-serif;background:var(--bg3);color:var(--text);outline:none;transition:border-color 0.2s;}
+.minput:focus{border-color:rgba(0,229,160,0.4);}
+.minput::placeholder{color:var(--text3);}
+.mbtn{width:100%;padding:13px;border-radius:10px;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;border:none;background:var(--g);color:#000;cursor:pointer;transition:all 0.2s;margin-top:4px;}
+.mbtn:hover{background:#00ffb2;box-shadow:var(--glow);}
+.mdiv{display:flex;align-items:center;gap:12px;margin:16px 0;}
+.mdiv::before,.mdiv::after{content:'';flex:1;height:1px;background:var(--border);}
+.mdiv span{font-size:11px;font-family:'DM Mono',monospace;color:var(--text3);}
+.mfooter{text-align:center;margin-top:16px;font-size:12px;color:var(--text3);}
+.mfooter a{color:var(--g);text-decoration:none;}
+@media(max-width:768px){nav{padding:0 16px;}.nav-links{display:none;}h1{font-size:36px;}.hero-stats{gap:24px;}footer{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-icon"><svg viewBox="0 0 16 16"><path d="M8 1L10 6H15L11 9.5L12.5 15L8 11.5L3.5 15L5 9.5L1 6H6Z"/></svg></div>
+    <span class="nav-brand">SharpEdge AI</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#features">Features</a>
+    <a class="nav-link" href="#demo">Demo</a>
+    <a class="nav-link" href="#pricing">Pricing</a>
+    <a class="nav-link" href="#how">How it works</a>
+  </div>
+  <div class="nav-right">
+    <a class="btn-ghost" href="#" onclick="openModal('login');return false;">Sign In</a>
+    <a class="btn-primary" href="#" onclick="openModal('signup');return false;">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"><div class="grid-bg"></div></div>
+  <div class="badge"><div class="bdot"></div>AI-POWERED BETTING INTELLIGENCE · 12 LEAGUES LIVE</div>
+  <h1>Stop guessing.<br>Start <span class="acc">winning.</span></h1>
+  <p class="hero-sub">SharpEdge AI analyzes live odds, tracks sharp money, and finds +EV plays across NFL, NBA, EPL, UFC, and 8 more leagues — in real time.</p>
+  <div class="hero-ctas">
+    <a class="btn-hero" href="#demo">Try the AI Free →</a>
+    <a class="btn-hero-o" href="#pricing">View Pricing</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hs-val"><span>12</span>+</div><div style="text-align:center;"><div class="hs-val"><span>12</span>+</div><div class="hs-lbl">Leagues Covered</div></div>
+    <div style="text-align:center;"><div class="hs-val"><span>58</span>%</div><div class="hs-lbl">Avg Win Rate</div></div>
+    <div style="text-align:center;"><div class="hs-val"><span>24</span>/7</div><div class="hs-lbl">Live Analysis</div></div>
+    <div style="text-align:center;"><div class="hs-val">+<span>EV</span></div><div class="hs-lbl">Every Pick</div></div>
+  </div>
+</section>
+
+<section class="alt-bg" id="demo">
+  <div class="inner-sm">
+    <span class="stag">Live Demo</span>
+    <h2 class="stitle">Talk to the AI.<br>Right now. Free.</h2>
+    <p class="ssub">No account needed. Ask SharpEdge anything about tonight's games, lines, parlays, or bankroll strategy.</p>
+    <div class="demo-win">
+      <div class="demo-bar">
+        <div class="dd" style="background:#FF5F57;"></div>
+        <div class="dd" style="background:#FFBD2E;"></div>
+        <div class="dd" style="background:#28C840;"></div>
+        <div class="demo-url">sharpedge.ai · AI Analyst · Live</div>
+      </div>
+      <div class="demo-chips">
+        <div class="dchip" onclick="dq('What is the best +EV bet tonight?')">+EV picks tonight</div>
+        <div class="dchip" onclick="dq('How do I use Kelly Criterion for bankroll management?')">Bankroll strategy</div>
+        <div class="dchip" onclick="dq('What does sharp money mean and how do I follow it?')">Sharp money</div>
+        <div class="dchip" onclick="dq('Build me a 3-leg EPL parlay strategy this weekend')">EPL parlay</div>
+        <div class="dchip" onclick="dq('What sports have the most betting edge for beginners?')">Best sports to bet</div>
+      </div>
+      <div class="demo-msgs" id="demo-msgs">
+        <div class="dmsg">
+          <div class="dav ai">SE</div>
+          <div class="dbub ai">Hey — I'm SharpEdge, your AI betting analyst. I cover NFL, NBA, MLB, NHL, EPL, La Liga, Bundesliga, Serie A, UFC, and more with live odds injected into every answer.<br><br>Ask me anything. What are you looking at?</div>
+        </div>
+      </div>
+      <div class="demo-inp">
+        <input id="di" placeholder="Ask anything about betting..." onkeydown="if(event.key==='Enter')ds()"/>
+        <button class="dsend" id="dsb" onclick="ds()"><svg viewBox="0 0 16 16"><path d="M2 2l12 6-12 6V9l8-1-8-1V2z"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="inner">
+    <div class="center" style="margin-bottom:52px;">
+      <span class="stag">Features</span>
+      <h2 class="stitle">Everything a sharp bettor needs.</h2>
+      <p style="font-size:16px;color:var(--text2);max-width:480px;margin:0 auto;line-height:1.7;">Built for serious bettors who want data, not hot takes.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">Live Odds Analysis</div><div class="feat-desc">Real-time lines from DraftKings, FanDuel, and BetMGM across 12 leagues. Spot value before the books adjust.</div><span class="feat-tag">LIVE DATA</span></div>
+      <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title">+EV Pick Finder</div><div class="feat-desc">The AI scans every game and surfaces only positive expected value spots — plays where you have a mathematical edge.</div><span class="feat-tag">EDGE FINDER</span></div>
+      <div class="feat-card"><div class="feat-icon">💰</div><div class="feat-title">Sharp Money Tracker</div><div class="feat-desc">Follow where the professionals are putting their money. Reverse line movement, steam alerts, sharp consensus — real time.</div><span class="feat-tag">SHARP INTEL</span></div>
+      <div class="feat-card"><div class="feat-icon">🏦</div><div class="feat-title">Bankroll Management</div><div class="feat-desc">Kelly Criterion-based unit sizing. The AI tells you exactly how many units to risk on every play based on your bankroll.</div><span class="feat-tag">RISK CONTROL</span></div>
+      <div class="feat-card"><div class="feat-icon">🔗</div><div class="feat-title">Parlay Optimizer</div><div class="feat-desc">Build smart parlays with correlated legs. The AI finds which legs stack logically and maximize your expected value.</div><span class="feat-tag">PARLAY BUILDER</span></div>
+      <div class="feat-card"><div class="feat-icon">📈</div><div class="feat-title">Pick Tracker & ROI</div><div class="feat-desc">Log every bet, track your record, units P/L, and ROI across sports. Know exactly where you make money and where you leak.</div><span class="feat-tag">PERFORMANCE</span></div>
+      <div class="feat-card"><div class="feat-icon">⚽</div><div class="feat-title">Global Soccer Coverage</div><div class="feat-desc">EPL, La Liga, Bundesliga, Serie A, Ligue 1, Champions League, MLS — full European coverage with Asian handicap analysis.</div><span class="feat-tag">12 LEAGUES</span></div>
+      <div class="feat-card"><div class="feat-icon">👥</div><div class="feat-title">Sharp Community</div><div class="feat-desc">Live group chat of serious bettors sharing picks, tips, and analysis. Learn from sharp minds worldwide in real time.</div><span class="feat-tag">COMMUNITY</span></div>
+      <div class="feat-card"><div class="feat-icon">🥊</div><div class="feat-title">UFC & MMA Props</div><div class="feat-desc">Method of victory, round betting, fighter analysis. The most underanalyzed market in sports — until now.</div><span class="feat-tag">UFC EDGE</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt-bg">
+  <div class="inner center">
+    <span class="stag">Coverage</span>
+    <h2 class="stitle">Every league. Every market.</h2>
+    <p style="font-size:16px;color:var(--text2);line-height:1.7;">More sports than any other AI betting tool.</p>
+    <div class="sports-pills">
+      <div class="sp">🏈 NFL</div>
+      <div class="sp">🏀 NBA</div>
+      <div class="sp">⚾ MLB</div>
+      <div class="sp">🏒 NHL</div>
+      <div class="sp">⚽ EPL</div>
+      <div class="sp">🇪🇸 La Liga</div>
+      <div class="sp">🇩🇪 Bundesliga</div>
+      <div class="sp">🇮🇹 Serie A</div>
+      <div class="sp">🇫🇷 Ligue 1</div>
+      <div class="sp">🏆 Champions League</div>
+      <div class="sp">🌎 MLS</div>
+      <div class="sp">🥊 UFC / MMA</div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="inner-sm">
+    <div class="center" style="margin-bottom:52px;">
+      <span class="stag">How It Works</span>
+      <h2 class="stitle">From odds to edge in seconds.</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step"><div class="step-n">1</div><div><div class="step-t">Live odds pulled automatically</div><div class="step-d">SharpEdge connects to sportsbook APIs and pulls live lines from DraftKings, FanDuel, and BetMGM every 5 minutes across all 12 leagues. You always see real, current odds.</div></div></div>
+      <div class="how-step"><div class="step-n">2</div><div><div class="step-t">AI analyzes every line for edge</div><div class="step-d">Claude — one of the most advanced AI models in the world — ingests the live odds and applies sharp betting logic: EV calculation, reverse line movement detection, and key number analysis.</div></div></div>
+      <div class="how-step"><div class="step-n">3</div><div><div class="step-t">You get clear, actionable picks</div><div class="step-d">No vague analysis. SharpEdge tells you exactly: bet or pass, which side, how many units, and why — in plain language. Every recommendation includes confidence level and risk assessment.</div></div></div>
+      <div class="how-step"><div class="step-n">4</div><div><div class="step-t">Track your performance over time</div><div class="step-d">Log every bet in the Pick Tracker. Watch your win rate, units P/L, and ROI compound. See which sports and bet types are making you money — and adjust.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt-bg">
+  <div class="inner">
+    <div class="center" style="margin-bottom:48px;">
+      <span class="stag">Results</span>
+      <h2 class="stitle">Sharps don't guess.</h2>
+    </div>
+    <div class="tgrid">
+      <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"SharpEdge caught a reverse line movement on the Raiders I completely missed. Ended up a 3-unit winner. The AI explained exactly why the sharp money was coming in."</div><div class="tc-author"><div class="tc-av" style="background:#00E5A0;">SM</div><div><div class="tc-name">SharpMike</div><div class="tc-handle">NBA Specialist</div><div class="tc-roi">+31.4% ROI · 47-21</div></div></div></div>
+      <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"I was betting EPL blind before this. Now I understand Asian handicaps, sharp money in European markets, and how to find value in the draw market. Total game changer."</div><div class="tc-author"><div class="tc-av" style="background:#FF6B9D;">PQ</div><div><div class="tc-name">PickQueen</div><div class="tc-handle">EPL Specialist</div><div class="tc-roi">+19.2% ROI · 52-31</div></div></div></div>
+      <div class="tc"><div class="tc-stars">★★★★★</div><div class="tc-text">"The bankroll management alone is worth the subscription. I stopped chasing losses and started sizing correctly. My P/L graph finally looks like it should."</div><div class="tc-author"><div class="tc-av" style="background:#F5A623;">BK</div><div><div class="tc-name">BankrollKing</div><div class="tc-handle">Multi-Sport</div><div class="tc-roi">+17.6% ROI · 44-26</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="inner">
+    <div class="center" style="margin-bottom:52px;">
+      <span class="stag">Pricing</span>
+      <h2 class="stitle">One winning bet pays<br>for the whole month.</h2>
+      <p style="font-size:16px;color:var(--text2);max-width:420px;margin:0 auto;line-height:1.7;">No contracts. Cancel anytime. Try the demo free right now.</p>
+    </div>
+    <div class="price-grid">
+      <div class="pc">
+        <div class="pc-name">Free</div>
+        <div class="pc-amt"><span class="pc-dollar">$</span><span class="pc-num">0</span><span class="pc-per">/mo</span></div>
+        <div class="pc-desc">Try SharpEdge before you commit. No card required.</div>
+        <div class="pc-feats">
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>5 AI queries per day</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Live odds · 3 sports</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Basic pick tracker</div>
+          <div class="pf dim"><div class="pfx">—</div>Sharp money data</div>
+          <div class="pf dim"><div class="pfx">—</div>Parlay optimizer</div>
+          <div class="pf dim"><div class="pfx">—</div>All 12 leagues</div>
+        </div>
+        <a class="pc-btn out" href="#" onclick="openModal('signup');return false;">Get Started Free</a>
+      </div>
+      <div class="pc pop">
+        <div class="pc-name">Sharp</div>
+        <div class="pc-amt"><span class="pc-dollar">$</span><span class="pc-num">49</span><span class="pc-per">/mo</span></div>
+        <div class="pc-desc">For serious bettors who want a real edge every single day.</div>
+        <div class="pc-feats">
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Unlimited AI queries</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Live odds · All 12 leagues</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Sharp money tracker</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Parlay optimizer</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Pick tracker + ROI</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Community access</div>
+        </div>
+        <a class="pc-btn fil" href="#" onclick="openModal('signup');return false;">Start Sharp — $49/mo</a>
+      </div>
+      <div class="pc">
+        <div class="pc-name">Syndicate</div>
+        <div class="pc-amt"><span class="pc-dollar">$</span><span class="pc-num">149</span><span class="pc-per">/mo</span></div>
+        <div class="pc-desc">The full arsenal. Everything SharpEdge has to offer.</div>
+        <div class="pc-feats">
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Everything in Sharp</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Player props · All sports</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Live bet alerts</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Priority AI response</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>VIP community channel</div>
+          <div class="pf"><div class="pfc"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>Early feature access</div>
+        </div>
+        <a class="pc-btn out" href="#" onclick="openModal('signup');return false;">Go Syndicate — $149/mo</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-inner">
+    <h2 class="cta-title">Your edge starts<br><span style="color:var(--g);">right now.</span></h2>
+    <p class="cta-sub">Try the AI free. No card required. One good bet pays for months of SharpEdge.</p>
+    <a class="btn-hero" href="#demo">Try SharpEdge Free →</a>
+  </div>
+</section>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="nav-icon" style="width:24px;height:24px;border-radius:6px;"><svg viewBox="0 0 16 16" width="11" height="11" fill="#000"><path d="M8 1L10 6H15L11 9.5L12.5 15L8 11.5L3.5 15L5 9.5L1 6H6Z"/></svg></div>
+    <span style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;">SharpEdge AI</span>
+    <span style="font-size:12px;color:var(--text3);font-family:'DM Mono',monospace;margin-left:10px;">© 2026</span>
+  </div>
+  <div class="footer-links">
+    <a class="fl" href="#">Terms</a>
+    <a class="fl" href="#">Privacy</a>
+    <a class="fl" href="#">Support</a>
+  </div>
+</footer>
+<div class="disclaimer">SharpEdge AI is an analytics and information platform. We do not place bets on your behalf. Please bet responsibly. Must be 21+ and in a jurisdiction where sports betting is legal.</div>
+
+<div class="modal-ov" id="auth-modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <div class="modal-logo"><svg viewBox="0 0 16 16"><path d="M8 1L10 6H15L11 9.5L12.5 15L8 11.5L3.5 15L5 9.5L1 6H6Z"/></svg></div>
+    <div class="modal-title" id="mtitle">Create your account</div>
+    <div class="modal-sub" id="msub">Join thousands of sharp bettors on SharpEdge.</div>
+    <div class="modal-tabs">
+      <button class="mtab active" id="t-signup" onclick="switchTab('signup')">Sign Up</button>
+      <button class="mtab" id="t-login" onclick="switchTab('login')">Sign In</button>
+    </div>
+    <div id="name-grp" class="igroup"><label class="ilabel">FULL NAME</label><input class="minput" id="a-name" placeholder="Your name" type="text"/></div>
+    <div class="igroup"><label class="ilabel">EMAIL</label><input class="minput" id="a-email" placeholder="you@example.com" type="email"/></div>
+    <div class="igroup"><label class="ilabel">PASSWORD</label><input class="minput" id="a-pass" placeholder="••••••••" type="password"/></div>
+    <button class="mbtn" id="mbtn" onclick="handleAuth()">Create Account →</button>
+    <div class="mdiv"><span>or continue as guest</span></div>
+    <div class="mfooter" id="mfooter">Already have an account? <a href="#" onclick="switchTab('login');return false;">Sign in</a></div>
+  </div>
+</div>
+
+<script>
+const BACKEND="https://sharpedge-backend-production.up.railway.app";
+const SYS=`You are SharpEdge AI on the landing page helping potential customers. Be sharp, engaging, and showcase your expertise. Give real betting insight. Cover NFL, NBA, EPL, La Liga, Bundesliga, Serie A, UFC. Use betting terminology. Keep under 150 words. Be genuinely helpful — let your analysis speak for itself. If asked about pricing mention $49/month Sharp plan with free demo available.`;
+let dh=[],dl=false;
+
+function appendD(role,text){
+  const el=document.getElementById('demo-msgs');
+  const d=document.createElement('div');
+  d.className='dmsg'+(role==='user'?' u':'');
+  d.innerHTML=`<div class="dav ${role==='user'?'u':'ai'}">${role==='user'?'YOU':'SE'}</div><div class="dbub ${role==='user'?'u':'ai'}">${text.replace(/\n/g,'<br>')}</div>`;
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+function showT(){
+  const el=document.getElementById('demo-msgs');
+  const d=document.createElement('div');d.className='dmsg';d.id='dtyp';
+  d.innerHTML='<div class="dav ai">SE</div><div class="tbub"><span></span><span></span><span></span></div>';
+  el.appendChild(d);el.scrollTop=el.scrollHeight;
+}
+function rmT(){const t=document.getElementById('dtyp');if(t)t.remove();}
+
+async function ds(){
+  if(dl)return;
+  const inp=document.getElementById('di');
+  const text=inp.value.trim();if(!text)return;
+  inp.value='';dl=true;document.getElementById('dsb').disabled=true;
+  appendD('user',text);dh.push({role:'user',content:text});showT();
+  try{
+    const res=await fetch(`${BACKEND}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:dh,system:SYS})});
+    const data=await res.json();
+    const reply=data.reply||'Ask me about any sport — I cover NFL, EPL, NBA, UFC, and more.';
+    dh.push({role:'assistant',content:reply});rmT();appendD('ai',reply);
+  }catch(e){rmT();appendD('ai','Ask me about any sport — NFL lines, EPL sharp money, UFC props, bankroll strategy. I cover it all.');}
+  dl=false;document.getElementById('dsb').disabled=false;
+}
+function dq(t){document.getElementById('di').value=t;ds();}
+
+let mTab='signup';
+function openModal(tab){document.getElementById('auth-modal').classList.add('open');switchTab(tab||'signup');}
+function closeModal(){document.getElementById('auth-modal').classList.remove('open');}
+function switchTab(tab){
+  mTab=tab;
+  document.getElementById('t-signup').classList.toggle('active',tab==='signup');
+  document.getElementById('t-login').classList.toggle('active',tab==='login');
+  document.getElementById('name-grp').style.display=tab==='signup'?'block':'none';
+  document.getElementById('mtitle').textContent=tab==='signup'?'Create your account':'Welcome back';
+  document.getElementById('msub').textContent=tab==='signup'?'Join thousands of sharp bettors on SharpEdge.':'Sign in to your SharpEdge account.';
+  document.getElementById('mbtn').textContent=tab==='signup'?'Create Account →':'Sign In →';
+  document.getElementById('mfooter').innerHTML=tab==='signup'?'Already have an account? <a href="#" onclick="switchTab(\'login\');return false;">Sign in</a>':'No account? <a href="#" onclick="switchTab(\'signup\');return false;">Sign up free</a>';
+}
+function handleAuth(){
+  const email=document.getElementById('a-email').value.trim();
+  const pass=document.getElementById('a-pass').value.trim();
+  if(!email||!pass){alert('Please fill in all fields.');return;}
+  window.location.href='app';
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const h=a.getAttribute('href');
+    if(h==='#')return;
+    const el=document.querySelector(h);
+    if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
