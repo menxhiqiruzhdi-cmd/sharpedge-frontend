@@ -331,7 +331,7 @@ const seUser=JSON.parse(localStorage.getItem('se_user')||'{}');
 if(!token){window.location.href='/';}
 
 function logout(){
-  fetch(`${BACKEND}/api/auth/logout`,{method:'POST',headers:{'Authorization':`Bearer ${token}`}})
+  fetch(`/proxy/auth/logout`,{method:'POST',headers:{'Authorization':`Bearer ${token}`}})
   .finally(()=>{localStorage.removeItem('se_token');localStorage.removeItem('se_user');window.location.href='/';});
 }
 
@@ -362,7 +362,7 @@ function ini(n){return n.slice(0,2).toUpperCase();}
 
 async function loadLiveOdds(){
   try{
-    const res=await fetch(`${BACKEND}/api/odds`);
+    const res=await fetch(`/proxy/odds`);
     const data=await res.json();
     if(data.games&&data.games.length>0){
       GAMES=data.games.map((g,i)=>({id:i+1,sport:g.sport,status:g.status,time:g.time,away:g.away,home:g.home,aml:g.awayML,hml:g.homeML,spread:g.spread,total:g.total,sharp:g.away,spct:Math.floor(Math.random()*30+45)}));
@@ -484,7 +484,7 @@ async function sendAI(){
   inp.value='';aiLoading=true;document.getElementById('ai-sbtn').disabled=true;
   appendMsg('user',text);aiHist.push({role:'user',content:text});showTyp();
   try{
-    const res=await fetch(`${BACKEND}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({messages:aiHist})});
+    const res=await fetch(`/proxy/chat`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({messages:aiHist})});
     if(!res.ok)throw new Error('error');
     const data=await res.json();
     const reply=data.reply||'No response.';
