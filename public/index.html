@@ -260,6 +260,12 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:500px;hei
   </div>
   <div class="hright">
     <div class="live-pill"><div class="ldot"></div>LIVE<span class="odds-ts" id="odds-updated"></span></div>
+    <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--text2);display:flex;align-items:center;gap:6px;">
+  <span style="color:var(--g);" id="user-name"></span>
+  <span style="color:var(--text3);">·</span>
+  <span id="user-tier" style="font-size:9px;padding:2px 7px;border-radius:5px;background:rgba(0,229,160,0.08);color:var(--g);border:1px solid rgba(0,229,160,0.15);text-transform:uppercase;letter-spacing:0.5px;"></span>
+</div>
+<button onclick="logout()" style="font-size:11px;font-family:'DM Mono',monospace;padding:4px 11px;border-radius:8px;border:1px solid var(--border);color:var(--text3);background:transparent;cursor:pointer;">Sign out</button>
     <div class="slip-btn" onclick="toggleSlip()">
       <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12l-2 8H4L2 2zm0 0L1 0M6 14a1 1 0 102 0 1 1 0 00-2 0zm5 0a1 1 0 102 0 1 1 0 00-2 0z"/></svg>
       Slip
@@ -778,6 +784,9 @@ function startBots(){
 }
 
 function updateOnline(){document.getElementById('gc-online').textContent=Math.floor(Math.random()*35)+8;}
+
+document.getElementById('user-name').textContent = seUser.name || seUser.email || 'Sharp';
+document.getElementById('user-tier').textContent = seUser.tier || 'free';
 
 loadLiveOdds();
 setInterval(loadLiveOdds,5*60*1000);
