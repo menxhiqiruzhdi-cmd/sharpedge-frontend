@@ -201,7 +201,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="logo"><svg viewBox="0 0 16 16"><path d="M8 1L10 6H15L11 9.5L12.5 15L8 11.5L3.5 15L5 9.5L1 6H6Z"/></svg></div>
   <span class="brand">SharpEdge</span><span class="brand-tag">AI</span>
@@ -213,7 +212,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
     <button class="logout-btn" onclick="logout()">Sign out</button>
   </div>
 </div>
-
 <div class="tabs">
   <div class="tab active" onclick="switchTab('games')">Games</div>
   <div class="tab" onclick="switchTab('ai')">AI Analyst</div>
@@ -222,7 +220,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
   <div class="tab" onclick="switchTab('profile')">Profile</div>
   <div class="tab" onclick="switchTab('chat')">Community</div>
 </div>
-
 <div class="panel active" id="panel-games">
   <div class="sport-filter">
     <div class="sf active" onclick="filterSport('ALL',this)">All</div>
@@ -242,7 +239,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
     <div class="loading-state"><div class="loading-ring"></div><div class="loading-text">FETCHING LIVE ODDS...</div></div>
   </div>
 </div>
-
 <div class="panel" id="panel-ai">
   <div class="ai-header"><div class="ai-status"></div><span class="ai-label">SHARPEDGE ANALYST · LIVE ODDS CONNECTED</span></div>
   <div class="quick-row">
@@ -262,7 +258,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
     <button class="sbtn" id="ai-sbtn" onclick="sendAI()"><svg viewBox="0 0 16 16"><path d="M2 2l12 6-12 6V9l8-1-8-1V2z"/></svg></button>
   </div>
 </div>
-
 <div class="panel" id="panel-tracker">
   <div class="tracker-top">
     <div class="stats-row" id="tracker-stats"></div>
@@ -278,12 +273,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
   </div>
   <div class="scroll" style="padding:12px;" id="picks-list"></div>
 </div>
-
 <div class="panel" id="panel-leaderboard">
   <div class="lb-podium" id="lb-podium"></div>
   <div style="overflow-y:auto;flex:1;" id="lb-list"></div>
 </div>
-
 <div class="panel" id="panel-profile">
   <div class="prof-banner">
     <div class="prof-av-big" id="prof-av">A</div>
@@ -294,7 +287,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
     <div style="padding:0 14px 14px;"><div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--text3);margin-bottom:10px;letter-spacing:0.5px;">WIN RATE BY SPORT</div><div id="sport-bars"></div></div>
   </div>
 </div>
-
 <div class="panel" id="panel-chat">
   <div id="gc-setup" class="gsetup">
     <p>Join the SharpEdge community.<br>Connect with sharp bettors worldwide.</p>
@@ -310,7 +302,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
     </div>
   </div>
 </div>
-
 <div class="slip-drawer" id="slip-drawer">
   <div class="slip-head"><span class="slip-head-title">Bet Slip</span><button class="slip-x" onclick="toggleSlip()">✕</button></div>
   <div class="slip-body" id="slip-body"><div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No bets added yet.<br>Click odds on any game.</div></div></div>
@@ -321,17 +312,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);hei
     <button class="place-btn" onclick="placeSlip()">PLACE BET</button>
   </div>
 </div>
-
 <script>
 const BACKEND="https://sharpedge-backend-production.up.railway.app";
-
-// Auth check
 const token=localStorage.getItem('se_token');
 const seUser=JSON.parse(localStorage.getItem('se_user')||'{}');
 if(!token){window.location.href='/';}
 
 function logout(){
-  fetch(`/proxy/auth/logout`,{method:'POST',headers:{'Authorization':`Bearer ${token}`}})
+  fetch(BACKEND+'/api/auth/logout',{method:'POST',headers:{'Authorization':'Bearer '+token}})
   .finally(()=>{localStorage.removeItem('se_token');localStorage.removeItem('se_user');window.location.href='/';});
 }
 
@@ -362,7 +350,7 @@ function ini(n){return n.slice(0,2).toUpperCase();}
 
 async function loadLiveOdds(){
   try{
-    const res=await fetch(`/proxy/odds`);
+    const res=await fetch(BACKEND+'/api/odds');
     const data=await res.json();
     if(data.games&&data.games.length>0){
       GAMES=data.games.map((g,i)=>({id:i+1,sport:g.sport,status:g.status,time:g.time,away:g.away,home:g.home,aml:g.awayML,hml:g.homeML,spread:g.spread,total:g.total,sharp:g.away,spct:Math.floor(Math.random()*30+45)}));
@@ -402,23 +390,22 @@ function renderGames(){
   list.forEach(g=>{if(!groups[g.sport])groups[g.sport]=[];groups[g.sport].push(g);});
   let html='';
   Object.entries(groups).forEach(([sport,games])=>{
-    html+=`<div class="section-label">${sport} · ${games.length} game${games.length!==1?'s':''}</div><div class="games-grid">`;
+    html+='<div class="section-label">'+sport+' · '+games.length+' game'+(games.length!==1?'s':'')+'</div><div class="games-grid">';
     games.forEach(g=>{
-      html+=`<div class="game-card">
-        <div class="gc-top"><span class="sport-tag">${g.sport}</span>${g.status==='LIVE'?'<span class="live-tag">● LIVE</span>':`<span class="time-tag">${g.time}</span>`}</div>
-        <div class="matchup"><div class="team-block"><div class="team-name">${g.away}</div></div><div class="matchup-vs">VS</div><div class="team-block"><div class="team-name">${g.home}</div></div></div>
-        <div class="odds-grid">
-          <div class="odd-btn" id="op-${g.id}-a" onclick="addToSlip(${g.id},'away')">${g.aml}</div>
-          <div class="spread-tag">${g.spread!=='N/A'?g.spread:'—'}</div>
-          <div class="odd-btn" id="op-${g.id}-h" onclick="addToSlip(${g.id},'home')">${g.hml}</div>
-        </div>
-        <div class="sharp-bar"><span class="sharp-label">SHARP</span><div class="sharp-track"><div class="sharp-fill" style="width:${g.spct}%;"></div></div><span class="sharp-pct">${g.spct}%</span></div>
-        <div class="total-row">Total <span>${g.total!=='N/A'?g.total:'—'}</span></div>
-        <div class="card-actions">
-          <button class="card-btn primary" onclick="analyzeGame(${g.id})">AI Analyze ↗</button>
-          <button class="card-btn" onclick="quickLog(${g.id})">Log Pick</button>
-        </div>
-      </div>`;
+      html+='<div class="game-card">'
+        +'<div class="gc-top"><span class="sport-tag">'+g.sport+'</span>'+(g.status==='LIVE'?'<span class="live-tag">● LIVE</span>':'<span class="time-tag">'+g.time+'</span>')+'</div>'
+        +'<div class="matchup"><div class="team-block"><div class="team-name">'+g.away+'</div></div><div class="matchup-vs">VS</div><div class="team-block"><div class="team-name">'+g.home+'</div></div></div>'
+        +'<div class="odds-grid">'
+        +'<div class="odd-btn" id="op-'+g.id+'-a" onclick="addToSlip('+g.id+',\'away\')">'+g.aml+'</div>'
+        +'<div class="spread-tag">'+(g.spread!=='N/A'?g.spread:'—')+'</div>'
+        +'<div class="odd-btn" id="op-'+g.id+'-h" onclick="addToSlip('+g.id+',\'home\')">'+g.hml+'</div>'
+        +'</div>'
+        +'<div class="sharp-bar"><span class="sharp-label">SHARP</span><div class="sharp-track"><div class="sharp-fill" style="width:'+g.spct+'%;"></div></div><span class="sharp-pct">'+g.spct+'%</span></div>'
+        +'<div class="total-row">Total <span>'+(g.total!=='N/A'?g.total:'—')+'</span></div>'
+        +'<div class="card-actions">'
+        +'<button class="card-btn primary" onclick="analyzeGame('+g.id+')">AI Analyze ↗</button>'
+        +'<button class="card-btn" onclick="quickLog('+g.id+')">Log Pick</button>'
+        +'</div></div>';
     });
     html+='</div>';
   });
@@ -426,10 +413,10 @@ function renderGames(){
 }
 
 function addToSlip(id,side){
-  const g=GAMES.find(x=>x.id===id);const key=`${id}-${side}`;
+  const g=GAMES.find(x=>x.id===id);const key=id+'-'+side;
   const idx=slip.findIndex(x=>x.key===key);
-  if(idx>=0){slip.splice(idx,1);document.getElementById(`op-${id}-${side}`).classList.remove('added');}
-  else{slip.push({key,game:`${g.away} vs ${g.home}`,label:side==='away'?g.away:g.home,odds:side==='away'?g.aml:g.hml});document.getElementById(`op-${id}-${side}`).classList.add('added');}
+  if(idx>=0){slip.splice(idx,1);document.getElementById('op-'+id+'-'+side).classList.remove('added');}
+  else{slip.push({key:key,game:g.away+' vs '+g.home,label:side==='away'?g.away:g.home,odds:side==='away'?g.aml:g.hml});document.getElementById('op-'+id+'-'+side).classList.add('added');}
   document.getElementById('slip-count').textContent=slip.length;calcSlip();
 }
 
@@ -437,14 +424,14 @@ function toggleSlip(){document.getElementById('slip-drawer').classList.toggle('o
 function renderSlip(){
   const el=document.getElementById('slip-body');
   if(!slip.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">No bets added yet.<br>Click odds on any game.</div></div>';return;}
-  el.innerHTML=slip.map((s,i)=>`<div class="slip-item"><div class="si-game">${s.game}</div><div class="si-bet">${s.label} · ${s.odds}</div><span class="si-rm" onclick="removeSlip(${i})">✕ Remove</span></div>`).join('');
+  el.innerHTML=slip.map(function(s,i){return '<div class="slip-item"><div class="si-game">'+s.game+'</div><div class="si-bet">'+s.label+' · '+s.odds+'</div><span class="si-rm" onclick="removeSlip('+i+')">✕ Remove</span></div>';}).join('');
   calcSlip();
 }
 function removeSlip(i){slip.splice(i,1);document.getElementById('slip-count').textContent=slip.length;renderSlip();calcSlip();}
 function calcSlip(){
   if(!slip.length){document.getElementById('slip-odds').textContent='—';document.getElementById('slip-win').textContent='—';return;}
   const stake=parseFloat(document.getElementById('slip-stake').value)||50;
-  let dec=1;slip.forEach(s=>{const o=parseInt(s.odds);if(!isNaN(o))dec*=o>0?(o/100+1):(100/Math.abs(o)+1);});
+  let dec=1;slip.forEach(function(s){const o=parseInt(s.odds);if(!isNaN(o))dec*=o>0?(o/100+1):(100/Math.abs(o)+1);});
   document.getElementById('slip-odds').textContent='+'+Math.round((dec-1)*100);
   document.getElementById('slip-win').textContent='$'+Math.round(stake*dec).toLocaleString();
 }
@@ -452,12 +439,12 @@ function placeSlip(){if(!slip.length)return;alert('Bet placed!');slip=[];documen
 
 function analyzeGame(id){
   const g=GAMES.find(x=>x.id===id);
-  document.getElementById('ai-in').value=`Analyze: ${g.away} (${g.aml}) vs ${g.home} (${g.hml}). ${g.sport}. Spread: ${g.spread}. Total: ${g.total}. What is the play?`;
+  document.getElementById('ai-in').value='Analyze: '+g.away+' ('+g.aml+') vs '+g.home+' ('+g.hml+'). '+g.sport+'. Spread: '+g.spread+'. Total: '+g.total+'. What is the play?';
   switchTab('ai');sendAI();
 }
 function quickLog(id){
   const g=GAMES.find(x=>x.id===id);
-  document.getElementById('pk-game').value=`${g.away} vs ${g.home}`;
+  document.getElementById('pk-game').value=g.away+' vs '+g.home;
   document.getElementById('pk-bet').value=g.away;
   switchTab('tracker');
 }
@@ -466,7 +453,7 @@ function appendMsg(role,text,isErr){
   const el=document.getElementById('ai-msgs');
   const d=document.createElement('div');d.className='msg'+(role==='user'?' u':'');
   const bc=isErr?'err':role==='user'?'u':'ai';
-  d.innerHTML=`<div class="av ${role==='user'?'u':'ai'}">${role==='user'?'A':'SE'}</div><div class="bub ${bc}">${text.replace(/\n/g,'<br>')}</div>`;
+  d.innerHTML='<div class="av '+(role==='user'?'u':'ai')+'">'+(role==='user'?'A':'SE')+'</div><div class="bub '+bc+'">'+text.replace(/\n/g,'<br>')+'</div>';
   el.appendChild(d);el.scrollTop=el.scrollHeight;
 }
 function showTyp(){
@@ -484,7 +471,7 @@ async function sendAI(){
   inp.value='';aiLoading=true;document.getElementById('ai-sbtn').disabled=true;
   appendMsg('user',text);aiHist.push({role:'user',content:text});showTyp();
   try{
-    const res=await fetch(`/proxy/chat`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':`Bearer ${token}`},body:JSON.stringify({messages:aiHist})});
+    const res=await fetch(BACKEND+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({messages:aiHist})});
     if(!res.ok)throw new Error('error');
     const data=await res.json();
     const reply=data.reply||'No response.';
@@ -498,7 +485,7 @@ function addPick(){
   const game=document.getElementById('pk-game').value.trim();
   const bet=document.getElementById('pk-bet').value.trim();
   if(!game||!bet)return;
-  picks.unshift({id:Date.now(),game,bet,odds:document.getElementById('pk-odds').value.trim(),units:parseFloat(document.getElementById('pk-units').value)||1,sport:document.getElementById('pk-sport').value,result:'pending',date:new Date().toLocaleDateString()});
+  picks.unshift({id:Date.now(),game:game,bet:bet,odds:document.getElementById('pk-odds').value.trim(),units:parseFloat(document.getElementById('pk-units').value)||1,sport:document.getElementById('pk-sport').value,result:'pending',date:new Date().toLocaleDateString()});
   try{localStorage.setItem('se_picks',JSON.stringify(picks));}catch(e){}
   document.getElementById('pk-game').value='';document.getElementById('pk-bet').value='';document.getElementById('pk-odds').value='';
   renderTracker();
@@ -512,49 +499,39 @@ function cycleResult(id){
 function renderTracker(){
   const wins=picks.filter(p=>p.result==='win').length;
   const losses=picks.filter(p=>p.result==='loss').length;
-  const units=picks.reduce((s,p)=>p.result==='win'?s+p.units:p.result==='loss'?s-p.units:s,0);
+  const units=picks.reduce(function(s,p){return p.result==='win'?s+p.units:p.result==='loss'?s-p.units:s;},0);
   const wr=wins+losses>0?Math.round(wins/(wins+losses)*100):0;
-  document.getElementById('tracker-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-val">${picks.length}</div><div class="stat-lbl">Picks</div></div>
-    <div class="stat-card"><div class="stat-val g">${wins}-${losses}</div><div class="stat-lbl">Record</div></div>
-    <div class="stat-card"><div class="stat-val">${wr}%</div><div class="stat-lbl">Win Rate</div></div>
-    <div class="stat-card"><div class="stat-val ${units>=0?'g':'r'}">${units>=0?'+':''}${units.toFixed(1)}u</div><div class="stat-lbl">Units P/L</div></div>`;
+  document.getElementById('tracker-stats').innerHTML='<div class="stat-card"><div class="stat-val">'+picks.length+'</div><div class="stat-lbl">Picks</div></div><div class="stat-card"><div class="stat-val g">'+wins+'-'+losses+'</div><div class="stat-lbl">Record</div></div><div class="stat-card"><div class="stat-val">'+wr+'%</div><div class="stat-lbl">Win Rate</div></div><div class="stat-card"><div class="stat-val '+(units>=0?'g':'r')+'">'+(units>=0?'+':'')+units.toFixed(1)+'u</div><div class="stat-lbl">Units P/L</div></div>';
   const el=document.getElementById('picks-list');
   if(!picks.length){el.innerHTML='<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-text">No picks logged yet.</div></div>';return;}
-  el.innerHTML=picks.map(p=>`<div class="pick-item"><div><div class="pi-game">${p.game}</div><div class="pi-bet">${p.bet} · ${p.sport} · ${p.units}u · ${p.date}</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><div onclick="cycleResult(${p.id})" class="rb rb-${p.result}">${p.result.toUpperCase()}</div><div style="font-size:9px;font-family:'DM Mono',monospace;color:var(--text3);">${p.odds||'—'}</div></div></div>`).join('');
+  el.innerHTML=picks.map(function(p){return '<div class="pick-item"><div><div class="pi-game">'+p.game+'</div><div class="pi-bet">'+p.bet+' · '+p.sport+' · '+p.units+'u · '+p.date+'</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><div onclick="cycleResult('+p.id+')" class="rb rb-'+p.result+'">'+p.result.toUpperCase()+'</div><div style="font-size:9px;font-family:\'DM Mono\',monospace;color:var(--text3);">'+(p.odds||'—')+'</div></div></div>';}).join('');
 }
 
 function renderLB(){
   const top3=LBOARD.slice(0,3);
-  const medals=['🥇','🥈','🥉'];const classes=['first','',''];
-  document.getElementById('lb-podium').innerHTML=top3.map((u,i)=>`<div class="podium-card ${classes[i]}"><div class="podium-medal">${medals[i]}</div><div class="podium-av" style="background:${u.c};color:#000;">${ini(u.n)}</div><div class="podium-name">${u.n}</div><div class="podium-roi">${u.roi}</div></div>`).join('');
-  document.getElementById('lb-list').innerHTML=LBOARD.slice(3).map((u,i)=>`<div class="lb-list-item"><div class="lb-rank">${i+4}</div><div class="lb-av" style="background:${u.c};color:#000;">${ini(u.n)}</div><div style="flex:1;"><div class="lb-name">${u.n}</div><div class="lb-sub">${u.sport} · ${u.units}u</div></div><div style="text-align:right;"><div class="lb-roi">${u.roi}</div><div style="font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);">${u.rec}</div></div></div>`).join('');
+  const medals=['🥇','🥈','🥉'];
+  document.getElementById('lb-podium').innerHTML=top3.map(function(u,i){return '<div class="podium-card '+(i===0?'first':'')+'"><div class="podium-medal">'+medals[i]+'</div><div class="podium-av" style="background:'+u.c+';color:#000;">'+ini(u.n)+'</div><div class="podium-name">'+u.n+'</div><div class="podium-roi">'+u.roi+'</div></div>';}).join('');
+  document.getElementById('lb-list').innerHTML=LBOARD.slice(3).map(function(u,i){return '<div class="lb-list-item"><div class="lb-rank">'+(i+4)+'</div><div class="lb-av" style="background:'+u.c+';color:#000;">'+ini(u.n)+'</div><div style="flex:1;"><div class="lb-name">'+u.n+'</div><div class="lb-sub">'+u.sport+' · '+u.units+'u</div></div><div style="text-align:right;"><div class="lb-roi">'+u.roi+'</div><div style="font-size:10px;font-family:\'DM Mono\',monospace;color:var(--text3);">'+u.rec+'</div></div></div>';}).join('');
 }
 
 function renderProfile(){
   const wins=picks.filter(p=>p.result==='win').length;
   const losses=picks.filter(p=>p.result==='loss').length;
-  const units=picks.reduce((s,p)=>p.result==='win'?s+p.units:p.result==='loss'?s-p.units:s,0);
-  const totalU=picks.reduce((s,p)=>s+p.units,0);
+  const units=picks.reduce(function(s,p){return p.result==='win'?s+p.units:p.result==='loss'?s-p.units:s;},0);
+  const totalU=picks.reduce(function(s,p){return s+p.units;},0);
   const roi=totalU>0?((units/totalU)*100).toFixed(1):0;
   const name=seUser.name||seUser.email||'Sharp';
   const tier=(seUser.tier||'free').toUpperCase();
   document.getElementById('prof-av').textContent=name.charAt(0).toUpperCase();
   document.getElementById('prof-name').textContent=name;
   document.getElementById('prof-tier-badge').textContent=tier;
-  document.getElementById('prof-stats').innerHTML=`
-    <div class="stat-card"><div class="stat-val">${picks.length}</div><div class="stat-lbl">Picks</div></div>
-    <div class="stat-card"><div class="stat-val g">${wins}-${losses}</div><div class="stat-lbl">Record</div></div>
-    <div class="stat-card"><div class="stat-val ${units>=0?'g':'r'}">${units>=0?'+':''}${units.toFixed(1)}u</div><div class="stat-lbl">Units P/L</div></div>
-    <div class="stat-card"><div class="stat-val">${roi}%</div><div class="stat-lbl">ROI</div></div>
-    <div class="stat-card"><div class="stat-val">#6</div><div class="stat-lbl">Rank</div></div>
-    <div class="stat-card"><div class="stat-val" style="font-size:14px;padding-top:4px;">${tier}</div><div class="stat-lbl">Tier</div></div>`;
+  document.getElementById('prof-stats').innerHTML='<div class="stat-card"><div class="stat-val">'+picks.length+'</div><div class="stat-lbl">Picks</div></div><div class="stat-card"><div class="stat-val g">'+wins+'-'+losses+'</div><div class="stat-lbl">Record</div></div><div class="stat-card"><div class="stat-val '+(units>=0?'g':'r')+'">'+(units>=0?'+':'')+units.toFixed(1)+'u</div><div class="stat-lbl">Units P/L</div></div><div class="stat-card"><div class="stat-val">'+roi+'%</div><div class="stat-lbl">ROI</div></div><div class="stat-card"><div class="stat-val">#6</div><div class="stat-lbl">Rank</div></div><div class="stat-card"><div class="stat-val" style="font-size:14px;padding-top:4px;">'+tier+'</div><div class="stat-lbl">Tier</div></div>';
   const sports=['NBA','NFL','MLB','NHL','EPL','La Liga','UFC'];
-  document.getElementById('sport-bars').innerHTML=sports.map(s=>{
+  document.getElementById('sport-bars').innerHTML=sports.map(function(s){
     const sp=picks.filter(p=>p.sport===s);
     const w=sp.filter(p=>p.result==='win').length;const l=sp.filter(p=>p.result==='loss').length;
     const pct=sp.length>0?Math.round(w/(w+l||1)*100):Math.floor(Math.random()*25+45);
-    return `<div class="sport-bar-row"><div class="sport-bar-label">${s.length>6?s.slice(0,6):s}</div><div class="sport-bar-track"><div class="sport-bar-fill" style="width:${pct}%;"></div></div><div class="sport-bar-val">${pct}%</div></div>`;
+    return '<div class="sport-bar-row"><div class="sport-bar-label">'+(s.length>6?s.slice(0,6):s)+'</div><div class="sport-bar-track"><div class="sport-bar-fill" style="width:'+pct+'%;"></div></div><div class="sport-bar-val">'+pct+'%</div></div>';
   }).join('');
 }
 
@@ -566,29 +543,29 @@ function joinGC(){
   try{gcMsgs=JSON.parse(localStorage.getItem('se_gc')||'[]').slice(-60);}catch(e){gcMsgs=[];}
   if(!gcMsgs.length){
     const now=Date.now();
-    BOTS.forEach((b,bi)=>b.msgs.forEach((m,mi)=>gcMsgs.push({n:b.n,c:b.c,text:m,t:now-(3600000-bi*500000-mi*150000)})));
-    gcMsgs.sort((a,b)=>a.t-b.t);
+    BOTS.forEach(function(b,bi){b.msgs.forEach(function(m,mi){gcMsgs.push({n:b.n,c:b.c,text:m,t:now-(3600000-bi*500000-mi*150000)});});});
+    gcMsgs.sort(function(a,b){return a.t-b.t;});
   }
   renderGC();startBots();updateOnline();
 }
 function renderGC(){
   const el=document.getElementById('gc-msgs');
-  el.innerHTML=gcMsgs.map(m=>{
+  el.innerHTML=gcMsgs.map(function(m){
     const me=m.n===gcUser;
     const ts=new Date(m.t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-    return `<div class="gmsg${me?' me':''}"><div class="gav" style="background:${m.c};color:#000;">${ini(m.n)}</div><div class="gmc">${!me?`<div class="gmn">${m.n}</div>`:''}<div class="gmb">${m.text}</div><div class="gmt">${ts}</div></div></div>`;
+    return '<div class="gmsg'+(me?' me':'')+'"><div class="gav" style="background:'+m.c+';color:#000;">'+ini(m.n)+'</div><div class="gmc">'+(me?'':'<div class="gmn">'+m.n+'</div>')+'<div class="gmb">'+m.text+'</div><div class="gmt">'+ts+'</div></div></div>';
   }).join('');
   el.scrollTop=el.scrollHeight;
 }
 function sendGC(){
   const inp=document.getElementById('gc-in');const text=inp.value.trim();if(!text)return;inp.value='';
-  gcMsgs.push({n:gcUser,c:'#00E5A0',text,t:Date.now()});
+  gcMsgs.push({n:gcUser,c:'#00E5A0',text:text,t:Date.now()});
   try{localStorage.setItem('se_gc',JSON.stringify(gcMsgs.slice(-60)));}catch(e){}
   renderGC();
 }
 function startBots(){
   if(gcTimer)clearInterval(gcTimer);
-  gcTimer=setInterval(()=>{
+  gcTimer=setInterval(function(){
     const b=BOTS[Math.floor(Math.random()*BOTS.length)];
     gcMsgs.push({n:b.n,c:b.c,text:b.msgs[Math.floor(Math.random()*b.msgs.length)],t:Date.now()});
     try{localStorage.setItem('se_gc',JSON.stringify(gcMsgs.slice(-60)));}catch(e){}
@@ -598,7 +575,6 @@ function startBots(){
 }
 function updateOnline(){document.getElementById('gc-online').textContent=Math.floor(Math.random()*35)+8;}
 
-// Boot
 document.getElementById('user-name').textContent=seUser.name||seUser.email||'Sharp';
 document.getElementById('user-tier').textContent=(seUser.tier||'free').toUpperCase();
 
