@@ -418,6 +418,23 @@ body::after{content:'';position:fixed;bottom:-200px;right:-200px;width:500px;hei
 <script>
 const BACKEND="https://sharpedge-backend-production.up.railway.app";
 
+// ─── Auth check ───────────────────────────────────────────────
+const token = localStorage.getItem('se_token');
+const seUser = JSON.parse(localStorage.getItem('se_user') || '{}');
+if (!token) { window.location.href = '/'; }
+
+// ─── Logout function ──────────────────────────────────────────
+function logout() {
+  fetch(`${BACKEND}/api/auth/logout`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}` }
+  }).finally(() => {
+    localStorage.removeItem('se_token');
+    localStorage.removeItem('se_user');
+    window.location.href = '/';
+  });
+}
+
 let GAMES=[],slip=[],aiHist=[],aiLoading=false,gcUser='',gcMsgs=[],gcTimer=null;
 let picks=[];
 try{picks=JSON.parse(localStorage.getItem('se_picks')||'[]');}catch(e){}
