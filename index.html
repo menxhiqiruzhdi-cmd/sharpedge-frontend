@@ -362,7 +362,7 @@ function ini(n){return n.slice(0,2).toUpperCase();}
 
 async function loadLiveOdds(){
   try{
-    const res=await fetch(`${BACKEND}/api/odds`,{headers:{'Authorization':`Bearer ${token}`}});
+    const res=await fetch(`${BACKEND}/api/odds`);
     const data=await res.json();
     if(data.games&&data.games.length>0){
       GAMES=data.games.map((g,i)=>({id:i+1,sport:g.sport,status:g.status,time:g.time,away:g.away,home:g.home,aml:g.awayML,hml:g.homeML,spread:g.spread,total:g.total,sharp:g.away,spct:Math.floor(Math.random()*30+45)}));
