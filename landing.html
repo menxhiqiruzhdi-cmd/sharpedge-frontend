@@ -463,8 +463,34 @@ function switchTab(tab){
 function handleAuth(){
   const email=document.getElementById('a-email').value.trim();
   const pass=document.getElementById('a-pass').value.trim();
+  const name=document.getElementById('a-name').value.trim();
   if(!email||!pass){alert('Please fill in all fields.');return;}
-  window.location.href='app';
+  const btn=document.getElementById('mbtn');
+  btn.textContent='Please wait...';btn.disabled=true;
+  const endpoint=mTab==='signup'?'/api/auth/signup':'/api/auth/login';
+  const body=mTab==='signup'?{email,password:pass,name}:{email,password:pass};
+  fetch(`${BACKEND}${endpoint}`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.error){
+      alert(data.error);
+      btn.textContent=mTab==='signup'?'Create Account →':'Sign In →';
+      btn.disabled=false;
+      return;
+    }
+    localStorage.setItem('se_token',data.token);
+    localStorage.setItem('se_user',JSON.stringify(data.user));
+    window.location.href='app';
+  })
+  .catch(e=>{
+    alert('Something went wrong. Try again.');
+    btn.textContent=mTab==='signup'?'Create Account →':'Sign In →';
+    btn.disabled=false;
+  });
 }
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
