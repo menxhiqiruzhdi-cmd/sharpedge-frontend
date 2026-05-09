@@ -438,7 +438,7 @@ async function ds(){
   inp.value='';dl=true;document.getElementById('dsb').disabled=true;
   appendD('user',text);dh.push({role:'user',content:text});showT();
   try{
-    const res=await fetch(`${BACKEND}/api/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:dh,system:SYS})});
+    const res=await fetch(`/proxy/chat`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:dh,system:SYS})});
     const data=await res.json();
     const reply=data.reply||'Ask me about any sport — I cover NFL, EPL, NBA, UFC, and more.';
     dh.push({role:'assistant',content:reply});rmT();appendD('ai',reply);
@@ -467,9 +467,9 @@ function handleAuth(){
   if(!email||!pass){alert('Please fill in all fields.');return;}
   const btn=document.getElementById('mbtn');
   btn.textContent='Please wait...';btn.disabled=true;
-  const endpoint=mTab==='signup'?'/api/auth/signup':'/api/auth/login';
+  const action=mTab==='signup'?'signup':'login';
   const body=mTab==='signup'?{email,password:pass,name}:{email,password:pass};
-  fetch(`${BACKEND}${endpoint}`,{
+  fetch('/proxy/auth/'+action,{
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(body)
